@@ -1,0 +1,33 @@
+{
+  "manifestVersion": "1.16",
+  "version": "1.0.0",
+  "id": "e4dc299b-86f8-412f-b8b1-1d087bf9426e",
+  "packageName": "com.cibot.test",
+  "developer": {
+    "name": "CI Bot",
+    "websiteUrl": "https://example.com",
+    "privacyUrl": "https://example.com",
+    "termsOfUseUrl": "https://example.com"
+  },
+  "name": {
+    "short": "CI Bot",
+    "full": "CI Alert Bot"
+  },
+  "description": {
+    "short": "CI fail alertleri",
+    "full": "CI pipeline fail olunca Teams'e alert atar"
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "accentColor": "#FF0000",
+  "bots": [
+    {
+      "botId": "BURAYA_APP_ID_YAZ",
+      "scopes": ["team", "groupChat"],
+      "isNotificationOnly": false
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"]
+}
