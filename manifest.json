@@ -1,4 +1,5 @@
 {
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
   "manifestVersion": "1.16",
   "version": "1.0.0",
   "id": "e4dc299b-86f8-412f-b8b1-1d087bf9426e",
@@ -15,7 +16,7 @@
   },
   "description": {
     "short": "CI fail alertleri",
-    "full": "CI pipeline fail olunca Teams'e alert atar"
+    "full": "CI pipeline fail olunca Teamse alert atar"
   },
   "icons": {
     "outline": "outline.png",
@@ -26,8 +27,15 @@
     {
       "botId": "e4dc299b-86f8-412f-b8b1-1d087bf9426e",
       "scopes": ["team", "groupChat"],
-      "isNotificationOnly": false
+      "isNotificationOnly": false,
+      "supportsCalling": false,
+      "supportsVideo": false,
+      "supportsFiles": false
     }
   ],
-  "permissions": ["identity", "messageTeamMembers"]
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": []
 }
