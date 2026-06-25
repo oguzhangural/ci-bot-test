@@ -1,0 +1,10 @@
+{
+  "name": "ci-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "botbuilder": "^4.21.0",
+    "express": "^4.18.0",
+    "node-fetch": "^2.6.9"
+  }
+}
