@@ -1,27 +1,30 @@
 const express = require('express');
-const { BotFrameworkAdapter, ActivityHandler } = require('botbuilder');
+const { BotFrameworkAdapter, ActivityHandler, TurnContext } = require('botbuilder');
 const fetch = require('node-fetch');
 
 const app = express();
 app.use(express.json());
 
 const adapter = new BotFrameworkAdapter({
-appId: process.env.MicrosoftAppId,
-appPassword: process.env.MicrosoftAppPassword
+  appId: process.env.MicrosoftAppId,
+  appPassword: process.env.MicrosoftAppPassword
 });
 
-// Teams'ten reply gelince çalışır
+let conversationRef = null;
+
 class CIBot extends ActivityHandler {
   constructor() {
     super();
+    this.onConversationUpdate(async (context, next) => {
+      conversationRef = TurnContext.getConversationReference(context.activity);
+      console.log('Conversation reference kaydedildi');
+      await next();
+    });
     this.onMessage(async (context, next) => {
+      conversationRef = TurnContext.getConversationReference(context.activity);
       const reply = context.activity.text;
       const user = context.activity.from.name;
-      const threadId = context.activity.conversation.id;
-
-      // n8n'e gönder (sonra dolduracağız)
       console.log(`Reply: ${reply} | User: ${user}`);
-
       await next();
     });
   }
@@ -29,16 +32,21 @@ class CIBot extends ActivityHandler {
 
 const bot = new CIBot();
 
-// Teams'ten gelen mesajlar
 app.post('/api/messages', (req, res) => {
   adapter.processActivity(req, res, async (context) => {
     await bot.run(context);
   });
 });
 
-// CI'dan gelen alert
 app.post('/api/ci-alert', async (req, res) => {
   console.log('CI Alert geldi:', req.body);
+  if (conversationRef) {
+    await adapter.continueConversation(conversationRef, async (context) => {
+      await context.sendActivity(`🔴 CI Failed\nBranch: ${req.body.branch}\nHata: ${req.body.error}\nKim: ${req.body.user}`);
+    });
+  } else {
+    console.log('Conversation reference yok henüz');
+  }
   res.sendStatus(200);
 });
 
