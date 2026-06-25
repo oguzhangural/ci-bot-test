@@ -24,7 +24,7 @@
   "accentColor": "#FF0000",
   "bots": [
     {
-      "botId": "BURAYA_APP_ID_YAZ",
+      "botId": "e4dc299b-86f8-412f-b8b1-1d087bf9426e",
       "scopes": ["team", "groupChat"],
       "isNotificationOnly": false
     }
