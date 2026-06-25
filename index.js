@@ -6,8 +6,8 @@ const app = express();
 app.use(express.json());
 
 const adapter = new BotFrameworkAdapter({
-  appId: 'e4dc299b-86f8-412f-b8b1-1d087bf9426e',
-  appPassword: '967dedd9-cafc-4a91-9c7f-b748e135c3f8'
+appId: process.env.MicrosoftAppId,
+appPassword: process.env.MicrosoftAppPassword
 });
 
 // Teams'ten reply gelince çalışır
