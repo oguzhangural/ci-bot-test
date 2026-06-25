@@ -14,3 +14,12 @@ jobs:
           node-version: '18'
       - run: npm install jest
       - run: npx jest
+        continue-on-error: true
+        id: test_step
+
+      - name: Notify Bot on Failure
+        if: steps.test_step.outcome == 'failure'
+        run: |
+          curl -X POST https://ci-bot-func-test-dpfmawg0gwe3bjba.westus-01.azurewebsites.net/api/ci-alert \
+          -H "Content-Type: application/json" \
+          -d '{"branch":"${{ github.ref_name }}","error":"Unit test failed","user":"${{ github.actor }}"}'
